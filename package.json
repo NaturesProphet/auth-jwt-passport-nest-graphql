@@ -20,7 +20,8 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "postgre:test": "docker run --name freela-db -p 5432:5432 -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=123 -e POSTGRES_DB=freela -d postgres:alpine",
-    "stop:all": "docker stop $(docker ps -q -a) && docker rm $(docker ps -q -a)"
+    "stop:all": "docker stop $(docker ps -q -a) && docker rm $(docker ps -q -a)",
+    "migrations": "ts-node ./node_modules/typeorm/cli.js migration:run"
   },
   "dependencies": {
     "@nestjs/common": "^6.10.14",
@@ -51,8 +52,7 @@
     "rxjs": "^6.5.4",
     "sqlite3": "^4.1.1",
     "type-graphql": "^0.17.6",
-    "typeorm": "^0.2.22",
-    "voyager": "^0.4.13"
+    "typeorm": "^0.2.22"
   },
   "devDependencies": {
     "@nestjs/cli": "^6.13.2",

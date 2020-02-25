@@ -7,19 +7,19 @@ import { AdminInput } from './inputs/admin.input';
 export class AdminResolver {
   constructor( private readonly service: AdminService ) { }
 
-  @Query( () => [ Admin ] )
+  @Query( () => [ Admin ], { description: "listar os administradores do sistema" } )
   public async admins (): Promise<Admin[]> {
     return this.service.listAdmins();
   }
 
 
-  @Query( () => Admin, { nullable: true } )
+  @Query( () => Admin, { nullable: true, description: "listar dados de um administrador pelo seu ID" } )
   public async admin ( @Args( 'id' ) id: number ): Promise<Admin> {
     return this.service.getAdmin( id );
   }
 
 
-  @Mutation( () => Admin )
+  @Mutation( () => Admin, { description: "Criar um novo administrador" } )
   public async createAdmin ( @Args( 'data' ) input: AdminInput ):
     Promise<Admin> {
     return this.service.createAdmin( input );

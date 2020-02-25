@@ -13,11 +13,9 @@ type Admin {
   email: String!
   cpf: String!
   phone: String!
-  passwordHash: String!
   status: String!
   profilePicturePath: String!
   emailVerificationCode: String!
-  campo: String!
   role: Role
 }
 
@@ -51,13 +49,13 @@ type GenericUser {
   email: String!
   cpf: String!
   phone: String!
-  passwordHash: String!
   status: String!
   profilePicturePath: String!
   emailVerificationCode: String!
 }
 
 type Mutation {
+  """Criar um novo administrador"""
   createAdmin(data: AdminInput!): Admin!
   createPermission(data: PermissionInput!): Permission!
   createRole(data: RoleInput!): Role!
@@ -69,7 +67,6 @@ type Permission {
   updatedAt: DateTime!
   operation: String!
   feature: String!
-  roles: [Role!]
 }
 
 input PermissionInput {
@@ -78,7 +75,10 @@ input PermissionInput {
 }
 
 type Query {
+  """listar os administradores do sistema"""
   admins: [Admin!]!
+
+  """listar dados de um administrador pelo seu ID"""
   admin(id: Float!): Admin
   Permissions: [Permission!]!
   Permission(id: Float!): Permission

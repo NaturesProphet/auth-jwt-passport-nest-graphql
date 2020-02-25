@@ -17,7 +17,6 @@ export class Permission extends GenericEntity {
   @Column()
   feature: string;
 
-  @Field( type => Array( Role ), { nullable: true } )
   @ManyToMany( type => Role, role => role.permissions )
   roles: Role[];
 }
