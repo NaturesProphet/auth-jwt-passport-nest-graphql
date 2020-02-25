@@ -1,0 +1,29 @@
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Admin } from '../../../db/models/admin.model';
+import { AdminService } from '../../services/admin.service';
+import { AdminInput } from './inputs/admin.input';
+
+@Resolver()
+export class AdminResolver {
+  constructor( private readonly service: AdminService ) { }
+
+  @Query( () => [ Admin ] )
+  public async admins (): Promise<Admin[]> {
+    return this.service.listAdmins();
+  }
+
+
+  @Query( () => Admin, { nullable: true } )
+  public async admin ( @Args( 'id' ) id: number ): Promise<Admin> {
+    return this.service.getAdmin( id );
+  }
+
+
+  @Mutation( () => Admin )
+  public async createAdmin ( @Args( 'data' ) input: AdminInput ):
+    Promise<Admin> {
+    return this.service.createAdmin( input );
+  }
+
+
+}
