@@ -2,7 +2,9 @@ import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { Permission } from '../../../db/models/permission.model';
 import { PermissionInput } from './inputs/permission.input';
 import { PermissionService } from '../../../api/services/permission.service';
-
+import { UseGuards } from '@nestjs/common';
+import { GqlAuthGuard } from '../../../api/auth/guards/graphql-auth.guard';
+import { GqlUser } from '../../../api/auth/decorators/decorators';
 
 
 @Resolver()
@@ -10,7 +12,9 @@ export class PermissionResolver {
   constructor( private readonly service: PermissionService ) { }
 
   @Query( () => [ Permission ] )
-  public async Permissions (): Promise<Permission[]> {
+  @UseGuards( GqlAuthGuard )
+  public async Permissions ( @GqlUser() user ): Promise<Permission[]> {
+    console.log( user );
     return this.service.listPermissions();
   }
 

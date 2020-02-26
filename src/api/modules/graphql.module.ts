@@ -11,6 +11,14 @@ const graphQLImports = [
   imports: [ DatabaseModule, GraphQLModule.forRoot( {
     autoSchemaFile: 'schema.gql',
     playground: true,
+    context: async ( { req, connection } ) => {
+      // subscriptions
+      if ( connection ) {
+        return { req: connection.context };
+      }
+      // queries and mutations
+      return { req };
+    }
   } ), ...graphQLImports ],
 
   providers: [],
