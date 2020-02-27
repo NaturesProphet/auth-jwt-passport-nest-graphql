@@ -14,7 +14,9 @@ export class LogResolver {
   constructor( private readonly service: LogService ) { }
 
   @UseGuards( GqlAuthGuard )
-  @Query( () => [ Log ] )
+  @Query( () => [ Log ], {
+    description: 'lista os logs de acesso'
+  } )
   public async logs ( @GqlUser() user, @ReqGql() req, @Args( 'query' ) query?: listLogsQuery ): Promise<Log[]> {
     adminOnly( user )
     return this.service.listLogs( req, query );

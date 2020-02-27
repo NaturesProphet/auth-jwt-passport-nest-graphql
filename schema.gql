@@ -220,7 +220,11 @@ type Mutation {
 
   """Atualizar dados de admin"""
   updateAdmin(data: AdminEditInput!): Admin!
+
+  """Cria uma nova permissão básica"""
   createPermission(data: PermissionInput!): Permission!
+
+  """Cria uma nova role administrativa"""
   createRole(data: RoleInput!): Role!
 }
 
@@ -255,10 +259,14 @@ type Query {
 
   """listar dados de um administrador pelo seu ID"""
   admin(id: Float!): Admin
+
+  """Listar permissões básicas"""
   Permissions: [Permission!]!
-  Permission(id: Float!): Permission
+
+  """listar as roles administrativas"""
   roles: [Role!]!
-  role(id: Float!): Role
+
+  """lista os logs de acesso"""
   logs(query: listLogsQuery!): [Log!]!
 }
 

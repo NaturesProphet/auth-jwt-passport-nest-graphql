@@ -10,7 +10,7 @@ import { LogInterceptor } from '../../../api/logs/log.interceptor';
 import { AdminEditInput } from './inputs/admin.edit';
 
 @UseInterceptors( LogInterceptor )
-@Resolver()
+@Resolver( 'Administradores' )
 export class AdminResolver {
   constructor( private readonly service: AdminService ) { }
 

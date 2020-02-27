@@ -9,13 +9,15 @@ import { LogInterceptor } from '../../../api/logs/log.interceptor';
 import { GqlAuthGuard } from '../../../api/auth/guards/graphql-auth.guard';
 
 @UseInterceptors( LogInterceptor )
-@Resolver()
+@Resolver( 'Roles Administrativas' )
 export class RoleResolver {
   constructor( private readonly service: RoleService ) { }
 
 
   @UseGuards( GqlAuthGuard )
-  @Query( () => [ Role ] )
+  @Query( () => [ Role ], {
+    description: 'listar as roles administrativas'
+  } )
   public async roles ( @GqlUser() user ): Promise<Role[]> {
     adminOnly( user );
     return this.service.listRoles();
@@ -23,15 +25,9 @@ export class RoleResolver {
 
 
   @UseGuards( GqlAuthGuard )
-  @Query( () => Role, { nullable: true } )
-  public async role ( @Args( 'id' ) id: number, @GqlUser() user ): Promise<Role> {
-    adminOnly( user );
-    return this.service.getRole( id );
-  }
-
-
-  @UseGuards( GqlAuthGuard )
-  @Mutation( () => Role )
+  @Mutation( () => Role, {
+    description: 'Cria uma nova role administrativa'
+  } )
   public async createRole ( @Args( 'data' ) input: RoleInput, @GqlUser() user ):
     Promise<Role> {
     adminOnly( user );
