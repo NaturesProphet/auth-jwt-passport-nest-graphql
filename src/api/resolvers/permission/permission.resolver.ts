@@ -15,6 +15,7 @@ import { adminOnly } from '../../../api/auth/strategys/functions.auth';
 export class PermissionResolver {
   constructor( private readonly service: PermissionService ) { }
 
+  @UseGuards( GqlAuthGuard )
   @Query( () => [ Permission ] )
   @UseGuards( GqlAuthGuard )
   public async Permissions ( @GqlUser() user ): Promise<Permission[]> {
@@ -23,7 +24,7 @@ export class PermissionResolver {
   }
 
 
-
+  @UseGuards( GqlAuthGuard )
   @Query( () => Permission, { nullable: true } )
   public async Permission ( @GqlUser() user, @Args( 'id' ) id: number ): Promise<Permission> {
     adminOnly( user );
@@ -31,7 +32,7 @@ export class PermissionResolver {
   }
 
 
-
+  @UseGuards( GqlAuthGuard )
   @Mutation( () => Permission )
   public async createPermission ( @GqlUser() user, @Args( 'data' ) input: PermissionInput ):
     Promise<Permission> {

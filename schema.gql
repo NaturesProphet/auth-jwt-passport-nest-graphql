@@ -19,6 +19,17 @@ type Admin {
   role: Role
 }
 
+input AdminEditInput {
+  id: Float!
+  name: String
+  birthDay: DateTime
+  email: String
+  cpf: String
+  phone: String
+  password: String
+  status: String
+}
+
 input AdminInput {
   name: String!
   birthDay: DateTime!
@@ -89,6 +100,9 @@ type Log {
 type Mutation {
   """Criar um novo administrador"""
   createAdmin(data: AdminInput!): Admin!
+
+  """Atualizar dados de admin"""
+  updateAdmin(data: AdminEditInput!): Admin!
   createPermission(data: PermissionInput!): Permission!
   createRole(data: RoleInput!): Role!
 }
