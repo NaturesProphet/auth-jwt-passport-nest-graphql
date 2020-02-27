@@ -4,16 +4,23 @@ import { ObjectType, Field } from 'type-graphql';
 
 @ObjectType()
 export abstract class GenericEntity {
-  @Field()
+  @Field( {
+    description: 'ID da entidade'
+  } )
   @PrimaryGeneratedColumn( { type: 'int' } )
   id: number;
 
-  @Field()
+  @Field( {
+    description: 'data de criação do registro'
+  } )
   @CreateDateColumn()
   createdAt: Date;
 
-  @Field()
+  @Field( {
+    description: 'data da ultima atualização do registro'
+  } )
   @UpdateDateColumn()
   updatedAt: Date;
 
 }
+

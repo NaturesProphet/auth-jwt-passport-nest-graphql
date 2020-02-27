@@ -8,14 +8,19 @@ import { ObjectType, Field } from 'type-graphql';
 @Index( [ "operation", "feature" ], { unique: true } )
 export class Permission extends GenericEntity {
 
-  @Field()
+  @Field( {
+    description: 'operação. exemplos: edit, list, delete, create'
+  } )
   @Column()
   operation: string;
 
 
-  @Field()
+  @Field( {
+    description: 'recurso. exemplo: admin, log'
+  } )
   @Column()
   feature: string;
+
 
   @ManyToMany( type => Role, role => role.permissions )
   roles: Role[];

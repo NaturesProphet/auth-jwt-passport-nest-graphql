@@ -7,13 +7,12 @@ import { ObjectType, Field } from 'type-graphql';
 @Entity()
 export class Admin extends GenericUser {
 
-  @Field( type => Role, { nullable: true } )
+  @Field( type => Role, {
+    nullable: true,
+    description: 'Role do administrador'
+  } )
   @ManyToOne( type => Role )
   @JoinColumn( { name: 'role_id' } )
   role: Role
 
-  @AfterLoad()
-  setType () {
-    this.accountType = 'admin';
-  }
 }

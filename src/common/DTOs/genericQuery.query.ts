@@ -7,12 +7,14 @@ export class GenericQuery {
   @IsOptional()
   @IsNumberString()
   @Field( {
-    nullable: true
+    nullable: true,
+    description: 'página da pesquisa'
   } )
   page: number;
 
   @Field( {
-    nullable: true
+    nullable: true,
+    description: 'limite de items por página'
   } )
   @IsOptional()
   @IsNumberString()

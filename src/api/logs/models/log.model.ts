@@ -6,11 +6,15 @@ import { ObjectType, Field } from "type-graphql";
 @ObjectType()
 export class Log extends GenericEntity {
   @Column()
-  @Field()
+  @Field( {
+    description: 'rota da API que originou o log'
+  } )
   endpoint: string;
 
   @Column( { nullable: true } )
-  @Field()
+  @Field( {
+    description: 'conteúdo do corpo da requisição'
+  } )
   body: string;
 
   @Column( { nullable: true } )
@@ -18,18 +22,26 @@ export class Log extends GenericEntity {
   variables: string;
 
   @Column( { nullable: true } )
-  @Field()
+  @Field( {
+    description: 'ID do usuário que gerou o log'
+  } )
   userId: number;
 
   @Column( { nullable: true } )
-  @Field()
+  @Field( {
+    description: 'Tipo de conta do usuário que gerou o log'
+  } )
   accountType: string;
 
   @Column( { nullable: true } )
-  @Field()
+  @Field( {
+    description: 'IP da requisição que gerou o log'
+  } )
   ip: string;
 
   @Column( { nullable: true } )
-  @Field()
+  @Field( {
+    description: 'Dispositivo ou sistema que enviou a requisição'
+  } )
   userAgent: string;
 }

@@ -4,7 +4,6 @@ import { paginate } from 'nestjs-typeorm-paginate';
 import { Log } from './models/log.model';
 import { listLogsQuery } from './resolvers/DTOs/listLogs.query';
 import { repositoryConfig } from '../../common/configs/repository.config';
-import { permissionFilter } from '../../common/utils.util';
 import { apiBaseUrl } from '../../common/configs/api.conf';
 
 @Injectable()
@@ -42,12 +41,6 @@ export class LogService {
       }
       if ( query.ip ) {
         queryBuilder.andWhere( 'log.ip = :data5', { data5: query.ip } );
-      }
-      if ( query.method ) {
-        queryBuilder.andWhere( 'log.method = :data6', { data6: query.method } );
-      }
-      if ( query.response ) {
-        queryBuilder.andWhere( 'log.response = :data7', { data7: query.response } );
       }
       if ( query.userAgent ) {
         queryBuilder.andWhere( 'log.userAgent = :data8', { data8: query.userAgent } );

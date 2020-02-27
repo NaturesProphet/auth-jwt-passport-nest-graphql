@@ -15,29 +15,41 @@ export class GenericUser extends GenericEntity {
     this.email = this.email.toLowerCase();
   }
 
-  @Field()
+  @Field( {
+    description: 'Nome do usuário'
+  } )
   @Column()
   name: string;
 
-  @Field()
+  @Field( {
+    description: 'identificação do dispositivo para push notifications'
+  } )
   @Column( { name: 'playerId', default: 'UNKNOWN PLAYER ID' } )
   playerId: string;
 
-  @Field()
+  @Field( {
+    description: 'data de aniversário do usuário'
+  } )
   @Column( { type: 'date' } )
   birthDay: Date;
 
-  @Field()
+  @Field( {
+    description: 'email do usuário'
+  } )
   @Column()
   @Index( { unique: true } )
   email: string;
 
-  @Field()
+  @Field( {
+    description: 'cpf do usuário'
+  } )
   @Column()
   @Index( { unique: true } )
   cpf: string;
 
-  @Field()
+  @Field( {
+    description: 'telefone do usuário'
+  } )
   @Column()
   @Index( { unique: true } )
   phone: string;
@@ -45,7 +57,9 @@ export class GenericUser extends GenericEntity {
   @Column( { select: false } )
   private passwordHash: string;
 
-  @Field()
+  @Field( {
+    description: 'status do usuário'
+  } )
   @Column( {
     type: "enum",
     enum: enumUserStatus,
@@ -53,15 +67,19 @@ export class GenericUser extends GenericEntity {
   } )
   status: string;
 
-  @Field()
+  @Field( {
+    description: 'link com a imagem de perfil do usuário'
+  } )
   @Column( { nullable: true } )
   profilePicturePath: string;
 
-  @Field()
+  @Field( {
+    description: 'código de verificação utilizado pela API para validar emails'
+  } )
   @Column( { nullable: true, select: false } )
   emailVerificationCode: string;
 
-  // usado pelo mecanismo de autenticação
+  // usado na autenticação apenas
   accountType: string;
 
   setPassword ( password: string ) {
