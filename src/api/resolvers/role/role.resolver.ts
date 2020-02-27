@@ -4,8 +4,10 @@ import { RoleInput } from './inputs/role.input';
 import { RoleService } from '../../../api/services/role.service';
 import { GqlUser } from '../../../api/auth/decorators/decorators';
 import { adminOnly } from '../../../api/auth/strategys/functions.auth';
+import { UseInterceptors } from '@nestjs/common';
+import { LogInterceptor } from '../../../api/logs/log.interceptor';
 
-
+@UseInterceptors( LogInterceptor )
 @Resolver()
 export class RoleResolver {
   constructor( private readonly service: RoleService ) { }

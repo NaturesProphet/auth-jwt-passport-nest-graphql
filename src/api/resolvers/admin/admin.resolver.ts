@@ -2,12 +2,13 @@ import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { Admin } from '../../../db/models/admin.model';
 import { AdminService } from '../../services/admin.service';
 import { AdminInput } from './inputs/admin.input';
-import { UseGuards } from '@nestjs/common';
+import { UseGuards, UseInterceptors } from '@nestjs/common';
 import { GqlAuthGuard } from '../../../api/auth/guards/graphql-auth.guard';
 import { GqlUser } from '../../../api/auth/decorators/decorators';
-import { adminOnly } from 'src/api/auth/strategys/functions.auth';
+import { adminOnly } from '../../../api/auth/strategys/functions.auth';
+import { LogInterceptor } from '../../../api/logs/log.interceptor';
 
-
+@UseInterceptors( LogInterceptor )
 @Resolver()
 export class AdminResolver {
   constructor( private readonly service: AdminService ) { }
