@@ -25,7 +25,7 @@ export class AuthService {
             .addSelect( 'admin.passwordHash' )
             .leftJoinAndSelect( 'admin.role', 'role' )
             .leftJoinAndSelect( 'role.permissions', 'permissions' )
-            .where( 'admin.email = email', { email: username } )
+            .where( 'admin.email = :email', { email: username } )
             .andWhere( "admin.status != 'deleted'" )
             .getOne();
         } catch ( err ) {
@@ -67,7 +67,8 @@ export class AuthService {
       email: user.email,
       id: user.id,
       status: user.status,
-      role: user.role
+      role: user.role,
+      accountType: user.accountType
     };
     return {
       access_token: this.jwtService.sign( payload ),

@@ -2,9 +2,10 @@ import { Module } from '@nestjs/common';
 import { DatabaseModule } from '../../db/Database/database.module';
 import { GraphQLModule } from '@nestjs/graphql';
 import { AdminModule } from './admin.module';
+import { LogModule } from '../logs/log.module';
 
 const graphQLImports = [
-  AdminModule
+  AdminModule, LogModule
 ];
 
 @Module( {

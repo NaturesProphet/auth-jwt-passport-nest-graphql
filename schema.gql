@@ -39,6 +39,11 @@ type GenericEntity {
   updatedAt: DateTime!
 }
 
+input GenericQuery {
+  page: Float
+  limit: Float
+}
+
 type GenericUser {
   id: Float!
   createdAt: DateTime!
@@ -52,6 +57,33 @@ type GenericUser {
   status: String!
   profilePicturePath: String!
   emailVerificationCode: String!
+}
+
+input listLogsQuery {
+  page: Float
+  limit: Float
+  endpoint: String
+  userId: Float
+  accountType: String
+  beforeDate: String
+  afterDate: String
+  response: Float
+  ip: String
+  method: String
+  userAgent: String
+}
+
+type Log {
+  id: Float!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  endpoint: String!
+  body: String!
+  variables: String!
+  userId: Float!
+  accountType: String!
+  ip: String!
+  userAgent: String!
 }
 
 type Mutation {
@@ -84,6 +116,7 @@ type Query {
   Permission(id: Float!): Permission
   roles: [Role!]!
   role(id: Float!): Role
+  logs(query: listLogsQuery!): [Log!]!
 }
 
 type Role {
