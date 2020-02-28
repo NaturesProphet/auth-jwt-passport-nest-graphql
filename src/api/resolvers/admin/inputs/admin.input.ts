@@ -1,47 +1,42 @@
 import { Field, InputType } from 'type-graphql';
+import { IsString, IsEmail, IsPhoneNumber } from 'class-validator';
 
 @InputType()
 export class AdminInput {
   @Field( {
-    nullable: true,
     description: "nome do administrador"
   } )
+  @IsString()
   name: string;
 
   @Field( {
-    nullable: true,
     description: "aniversário administrador"
   } )
+  @IsString()
   birthDay: Date;
 
   @Field( {
-    nullable: true,
     description: "email do administrador"
   } )
+  @IsEmail()
   email: string;
 
+  @IsString()
   @Field( {
-    nullable: true,
     description: "CPF do administrador"
   } )
   cpf: string;
 
+  @IsPhoneNumber( 'BR' )
   @Field( {
-    nullable: true,
     description: "telefone do administrador"
   } )
   phone: string;
 
+  @IsString()
   @Field( {
-    nullable: true,
     description: "nova senha do administrador"
   } )
   password: string;
-
-  @Field( {
-    nullable: true,
-    description: "status do administrador"
-  } )
-  status: string;
 
 }

@@ -8,6 +8,7 @@ import { GqlUser } from '../../../api/auth/decorators/decorators';
 import { adminOnly } from '../../../api/auth/strategys/functions.auth';
 import { LogInterceptor } from '../../../api/logs/log.interceptor';
 import { AdminEditInput } from './inputs/admin.edit';
+import { AdminQueryInput } from './inputs/admin.query';
 
 @UseInterceptors( LogInterceptor )
 @Resolver( 'Administradores' )
@@ -17,17 +18,11 @@ export class AdminResolver {
 
   @UseGuards( GqlAuthGuard )
   @Query( () => [ Admin ], { description: "listar os administradores do sistema" } )
-  public async admins ( @GqlUser() user ): Promise<Admin[]> {
+  public async listAdmins ( @GqlUser() user, @Args( 'query' ) query: AdminQueryInput ): Promise<Admin[]> {
     adminOnly( user );
-    return this.service.listAdmins();
+    return this.service.listAdmins( query );
   }
 
-  @UseGuards( GqlAuthGuard )
-  @Query( () => Admin, { nullable: true, description: "listar dados de um administrador pelo seu ID" } )
-  public async admin ( @Args( 'id' ) id: number, @GqlUser() user ): Promise<Admin> {
-    adminOnly( user );
-    return this.service.getAdmin( id );
-  }
 
   @UseGuards( GqlAuthGuard )
   @Mutation( () => Admin, { description: "Criar um novo administrador" } )
@@ -40,7 +35,7 @@ export class AdminResolver {
 
   @UseGuards( GqlAuthGuard )
   @Mutation( () => Admin, { description: "Atualizar dados de admin" } )
-  public async updateAdmin ( @Args( 'data' ) input: AdminEditInput, @GqlUser() user ):
+  public async editAdmin ( @Args( 'data' ) input: AdminEditInput, @GqlUser() user ):
     Promise<Admin> {
     adminOnly( user );
     return this.service.editAdmin( input );

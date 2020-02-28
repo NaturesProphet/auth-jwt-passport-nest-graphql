@@ -17,7 +17,7 @@ export class LogResolver {
   @Query( () => [ Log ], {
     description: 'lista os logs de acesso'
   } )
-  public async logs ( @GqlUser() user, @ReqGql() req, @Args( 'query' ) query?: listLogsQuery ): Promise<Log[]> {
+  public async listLogs ( @GqlUser() user, @ReqGql() req, @Args( 'query' ) query?: listLogsQuery ): Promise<Log[]> {
     adminOnly( user )
     return this.service.listLogs( req, query );
   }

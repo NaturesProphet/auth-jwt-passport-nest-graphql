@@ -7,6 +7,7 @@ import { GqlAuthGuard } from '../../../api/auth/guards/graphql-auth.guard';
 import { GqlUser } from '../../../api/auth/decorators/decorators';
 import { LogInterceptor } from '../../../api/logs/log.interceptor';
 import { adminOnly } from '../../../api/auth/strategys/functions.auth';
+import { PermissionQueryInput } from './inputs/permission.query';
 
 
 
@@ -20,9 +21,9 @@ export class PermissionResolver {
     description: 'Listar permissões básicas'
   } )
   @UseGuards( GqlAuthGuard )
-  public async Permissions ( @GqlUser() user ): Promise<Permission[]> {
+  public async listPermissions ( @GqlUser() user, @Args( 'query' ) query: PermissionQueryInput ): Promise<Permission[]> {
     adminOnly( user );
-    return this.service.listPermissions();
+    return this.service.listPermissions( query );
   }
 
 

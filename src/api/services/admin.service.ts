@@ -5,6 +5,8 @@ import { repositoryConfig } from '../../common/configs/repository.config';
 import { AdminInput } from '../resolvers/admin/inputs/admin.input';
 import { checkEntityAlreadExist } from '../../common/utils.util';
 import { AdminEditInput } from '../resolvers/admin/inputs/admin.edit';
+import { AdminQueryInput } from '../resolvers/admin/inputs/admin.query';
+import { paginate } from 'nestjs-typeorm-paginate';
 
 
 
@@ -16,17 +18,36 @@ export class AdminService {
   ) { }
 
 
-  async listAdmins () {
-    try {
-      return await this.adminRepository.find( { relations: [ 'role' ] } );
-    } catch ( err ) {
-      throw new UnprocessableEntityException( err.message );
-    }
-  }
+  async listAdmins ( query: AdminQueryInput ) {
+    let limit = query.limit ? +query.limit : 5;
+    let page = query.page ? +query.page : 1
 
-  async getAdmin ( id: number ) {
+    let qb = this.adminRepository.createQueryBuilder( 'admin' );
+    qb.where( '1=1' );
+    qb.orderBy( 'admin.id', 'DESC' );
+
+    if ( query.id ) {
+      qb.andWhere( 'admin.id = :id', { id: query.id } )
+    }
+    if ( query.cpf ) {
+      qb.andWhere( 'admin.cpf = :cpf', { cpf: query.cpf } );
+    }
+    if ( query.email ) {
+      qb.andWhere( 'admin.email = :email', { email: query.email } )
+    }
+    if ( query.name ) {
+      qb.andWhere( 'admin.name = :name', { name: query.name } );
+    }
+    if ( query.phone ) {
+      qb.andWhere( 'admin.phone = :phone', { phone: query.phone } );
+    }
+    if ( query.status ) {
+      qb.andWhere( 'admin.status = :status', { status: query.status } );
+    }
+
     try {
-      return await this.adminRepository.findOne( id );
+      let results = await paginate<Admin>( qb, { page: page, limit: limit } );
+      return results.items;
     } catch ( err ) {
       throw new UnprocessableEntityException( err.message );
     }

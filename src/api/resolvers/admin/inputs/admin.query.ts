@@ -1,17 +1,10 @@
 import { Field, InputType } from 'type-graphql';
-import { IsNumber, IsOptional, IsString, IsEmail, IsPhoneNumber, IsEnum } from 'class-validator';
+import { GenericQuery } from '../../../../common/DTOs/genericQuery.query';
+import { IsOptional, IsString, IsEmail, IsPhoneNumber, IsEnum } from 'class-validator';
 import { enumUserStatus } from '../../../../common/enums/userStatus.enum';
 
 @InputType()
-export class AdminEditInput {
-
-  @Field( {
-    description: "ID do administrador"
-  } )
-  @IsOptional()
-  @IsNumber()
-  id: number;
-
+export class AdminQueryInput extends GenericQuery {
   @Field( {
     nullable: true,
     description: "nome do administrador"
@@ -22,20 +15,11 @@ export class AdminEditInput {
 
   @Field( {
     nullable: true,
-    description: "aniversário administrador"
-  } )
-  @IsOptional()
-  @IsString()
-  birthDay: Date;
-
-  @Field( {
-    nullable: true,
     description: "email do administrador"
   } )
   @IsOptional()
   @IsEmail()
   email: string;
-
 
   @Field( {
     nullable: true,
@@ -52,14 +36,6 @@ export class AdminEditInput {
   @IsOptional()
   @IsPhoneNumber( 'BR' )
   phone: string;
-
-  @Field( {
-    nullable: true,
-    description: "nova senha do administrador"
-  } )
-  @IsOptional()
-  @IsString()
-  password: string;
 
   @Field( {
     nullable: true,

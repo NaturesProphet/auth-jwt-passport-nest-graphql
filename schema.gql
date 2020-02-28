@@ -72,10 +72,36 @@ input AdminEditInput {
 
 input AdminInput {
   """nome do administrador"""
-  name: String
+  name: String!
 
   """aniversário administrador"""
-  birthDay: DateTime
+  birthDay: DateTime!
+
+  """email do administrador"""
+  email: String!
+
+  """CPF do administrador"""
+  cpf: String!
+
+  """telefone do administrador"""
+  phone: String!
+
+  """nova senha do administrador"""
+  password: String!
+}
+
+input AdminQueryInput {
+  """ID da entidade"""
+  id: Float
+
+  """página da pesquisa"""
+  page: Float
+
+  """limite de items por página"""
+  limit: Float
+
+  """nome do administrador"""
+  name: String
 
   """email do administrador"""
   email: String
@@ -85,9 +111,6 @@ input AdminInput {
 
   """telefone do administrador"""
   phone: String
-
-  """nova senha do administrador"""
-  password: String
 
   """status do administrador"""
   status: String
@@ -110,6 +133,9 @@ type GenericEntity {
 }
 
 input GenericQuery {
+  """ID da entidade"""
+  id: Float
+
   """página da pesquisa"""
   page: Float
 
@@ -156,6 +182,9 @@ type GenericUser {
 }
 
 input listLogsQuery {
+  """ID da entidade"""
+  id: Float
+
   """página da pesquisa"""
   page: Float
 
@@ -219,13 +248,19 @@ type Mutation {
   createAdmin(data: AdminInput!): Admin!
 
   """Atualizar dados de admin"""
-  updateAdmin(data: AdminEditInput!): Admin!
+  editAdmin(data: AdminEditInput!): Admin!
 
   """Cria uma nova permissão básica"""
   createPermission(data: PermissionInput!): Permission!
 
   """Cria uma nova role administrativa"""
   createRole(data: RoleInput!): Role!
+
+  """Adiciona uma lista de permissões à uma role"""
+  editRoleAddingPermissions(dto: RoleEditInput!): Role!
+
+  """Remove uma lista de permissões de uma role"""
+  editRoleRemovingPermissions(dto: RoleEditInput!): Role!
 }
 
 type Permission {
@@ -253,21 +288,35 @@ input PermissionInput {
   feature: String!
 }
 
+input PermissionQueryInput {
+  """ID da entidade"""
+  id: Float
+
+  """página da pesquisa"""
+  page: Float
+
+  """limite de items por página"""
+  limit: Float
+
+  """operação. exemplos: edit, list, delete, create"""
+  operation: String
+
+  """recurso. exemplo: admin, log"""
+  feature: String
+}
+
 type Query {
   """listar os administradores do sistema"""
-  admins: [Admin!]!
-
-  """listar dados de um administrador pelo seu ID"""
-  admin(id: Float!): Admin
+  listAdmins(query: AdminQueryInput!): [Admin!]!
 
   """Listar permissões básicas"""
-  Permissions: [Permission!]!
+  listPermissions(query: PermissionQueryInput!): [Permission!]!
 
   """listar as roles administrativas"""
-  roles: [Role!]!
+  listRoles(query: RoleQueryInput!): [Role!]!
 
   """lista os logs de acesso"""
-  logs(query: listLogsQuery!): [Log!]!
+  listLogs(query: listLogsQuery!): [Log!]!
 }
 
 type Role {
@@ -290,6 +339,14 @@ type Role {
   permissions: [Permission!]
 }
 
+input RoleEditInput {
+  """ID da role"""
+  role: Float!
+
+  """Lista com os IDs das permissões"""
+  permissions: [Int!]!
+}
+
 input RoleInput {
   """Nome da nova role"""
   name: String!
@@ -299,4 +356,18 @@ input RoleInput {
 
   """Lista com os IDs das permissões a serem adicionadas a nova role."""
   permissions: [Int!]!
+}
+
+input RoleQueryInput {
+  """ID da entidade"""
+  id: Float
+
+  """página da pesquisa"""
+  page: Float
+
+  """limite de items por página"""
+  limit: Float
+
+  """Nome da role"""
+  name: String
 }

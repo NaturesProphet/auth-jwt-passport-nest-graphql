@@ -4,6 +4,8 @@ import { repositoryConfig } from '../../common/configs/repository.config';
 import { Permission } from '../../db/models/permission.model';
 import { PermissionInput } from '../resolvers/permission/inputs/permission.input';
 import { checkEntityAlreadExist } from '../../common/utils.util';
+import { PermissionQueryInput } from '../resolvers/permission/inputs/permission.query';
+import { paginate } from 'nestjs-typeorm-paginate';
 
 
 
@@ -15,17 +17,28 @@ export class PermissionService {
   ) { }
 
 
-  async listPermissions () {
-    try {
-      return await this.PermissionRepository.find();
-    } catch ( err ) {
-      throw new UnprocessableEntityException( err.message );
-    }
-  }
+  async listPermissions ( query: PermissionQueryInput ) {
+    let limit = query.limit ? +query.limit : 5;
+    let page = query.page ? +query.page : 1
 
-  async getPermission ( id: number ) {
+    let qb = this.PermissionRepository.createQueryBuilder( 'permission' );
+    qb.where( '1=1' );
+    qb.orderBy( 'permission.id', 'DESC' );
+
+    if ( query.id ) {
+      qb.andWhere( 'permission.id = :id', { id: query.id } )
+    }
+    if ( query.operation ) {
+      qb.andWhere( 'permission.operation = :operation', { operation: query.operation } );
+    }
+    if ( query.feature ) {
+      qb.andWhere( 'permission.feature', { feature: query.feature } );
+    }
+
+
     try {
-      return await this.PermissionRepository.findOne( id );
+      let results = await paginate<Permission>( qb, { page: page, limit: limit } );
+      return results.items;
     } catch ( err ) {
       throw new UnprocessableEntityException( err.message );
     }
