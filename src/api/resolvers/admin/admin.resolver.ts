@@ -4,7 +4,7 @@ import { AdminService } from '../../services/admin.service';
 import { AdminInput } from './inputs/admin.input';
 import { UseGuards, UseInterceptors } from '@nestjs/common';
 import { GqlAuthGuard } from '../../../api/auth/guards/graphql-auth.guard';
-import { GqlUser } from '../../../api/auth/decorators/decorators';
+import { GqlUser, GqlReq } from '../../../api/auth/decorators/decorators';
 import { adminOnly } from '../../../api/auth/strategys/functions.auth';
 import { LogInterceptor } from '../../../api/logs/log.interceptor';
 import { AdminEditInput } from './inputs/admin.edit';

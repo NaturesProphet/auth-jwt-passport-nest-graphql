@@ -2,11 +2,11 @@ import { createParamDecorator } from '@nestjs/common';
 import { Response } from 'express';
 import { AuthenticatedUser } from '../DTOs/authenticatedUser.class';
 
-export const ResGql = createParamDecorator(
+export const GqlRes = createParamDecorator(
   ( data, [ root, args, ctx, info ] ): Response => ctx.res,
 );
 
-export const ReqGql = createParamDecorator(
+export const GqlReq = createParamDecorator(
   ( data, [ root, args, ctx, info ] ): Request => ctx.req,
 );
 

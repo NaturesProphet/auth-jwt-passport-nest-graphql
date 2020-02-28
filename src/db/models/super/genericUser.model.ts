@@ -7,8 +7,10 @@ import { enumUserStatus } from "../../../common/enums/userStatus.enum";
 import { GenericEntity } from "./genericEntity.model";
 import { ObjectType, Field } from 'type-graphql';
 
-@ObjectType()
-export class GenericUser extends GenericEntity {
+@ObjectType( {
+  description: 'Usuário genérico abstrato. Todos os usuários erdam dele.'
+} )
+export abstract class GenericUser extends GenericEntity {
 
   @BeforeInsert()
   padronize () {

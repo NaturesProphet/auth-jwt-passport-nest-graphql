@@ -2,7 +2,9 @@ import { PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from "type
 import { ObjectType, Field } from 'type-graphql';
 
 
-@ObjectType()
+@ObjectType( {
+  description: 'Entidade genérica abastrata. todas as classes erdam dela.'
+} )
 export abstract class GenericEntity {
   @Field( {
     description: 'ID da entidade'

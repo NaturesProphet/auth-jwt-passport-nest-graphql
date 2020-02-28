@@ -1,7 +1,7 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
 import { LogService } from '../log.service';
 import { Log } from '../models/log.model';
-import { ReqGql, GqlUser } from '../../../api/auth/decorators/decorators';
+import { GqlReq, GqlUser } from '../../../api/auth/decorators/decorators';
 import { listLogsQuery } from './DTOs/listLogs.query';
 import { UseInterceptors, UseGuards } from '@nestjs/common';
 import { LogInterceptor } from '../log.interceptor';
@@ -17,7 +17,7 @@ export class LogResolver {
   @Query( () => [ Log ], {
     description: 'lista os logs de acesso'
   } )
-  public async listLogs ( @GqlUser() user, @ReqGql() req, @Args( 'query' ) query?: listLogsQuery ): Promise<Log[]> {
+  public async listLogs ( @GqlUser() user, @GqlReq() req, @Args( 'query' ) query?: listLogsQuery ): Promise<Log[]> {
     adminOnly( user )
     return this.service.listLogs( req, query );
   }

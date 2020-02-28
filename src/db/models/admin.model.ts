@@ -3,7 +3,9 @@ import { GenericUser } from "./super/genericUser.model";
 import { Role } from "./role.model";
 import { ObjectType, Field } from 'type-graphql';
 
-@ObjectType()
+@ObjectType( {
+  description: 'Administrador do sistema'
+} )
 @Entity()
 export class Admin extends GenericUser {
 

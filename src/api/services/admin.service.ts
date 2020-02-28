@@ -23,6 +23,7 @@ export class AdminService {
     let page = query.page ? +query.page : 1
 
     let qb = this.adminRepository.createQueryBuilder( 'admin' );
+    qb.leftJoinAndSelect( 'admin.role', 'role' )
     qb.where( '1=1' );
     qb.orderBy( 'admin.id', 'DESC' );
 

@@ -213,6 +213,7 @@ input listLogsQuery {
   userAgent: String
 }
 
+"""Registro de todas as requisições atendidas pelo serviço"""
 type Log {
   """ID da entidade"""
   id: Float!

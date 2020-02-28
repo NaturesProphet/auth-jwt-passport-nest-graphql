@@ -3,7 +3,9 @@ import { GenericEntity } from "../../../db/models/super/genericEntity.model";
 import { ObjectType, Field } from "type-graphql";
 
 @Entity()
-@ObjectType()
+@ObjectType( {
+  description: 'Registro de todas as requisições atendidas pelo serviço'
+} )
 export class Log extends GenericEntity {
   @Column()
   @Field( {

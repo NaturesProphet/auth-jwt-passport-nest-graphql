@@ -3,7 +3,10 @@ import { Permission } from "./permission.model";
 import { GenericEntity } from "./super/genericEntity.model";
 import { ObjectType, Field } from 'type-graphql';
 
-@ObjectType()
+@ObjectType( {
+  description: 'Role administrativa. Define o papel de cada administrador '
+    + 'no sistema, limitando seu nível de acesso.'
+} )
 @Entity()
 export class Role extends GenericEntity {
   @Field( {
