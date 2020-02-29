@@ -100,8 +100,11 @@ no canto esquerdo inferior, vá nos headers e adicione o token
   "Authorization":"<Seu Token vai aqui>"
 }
 ```
+![Playground](./docs/prints/playground.png)
 
 Pronto! agora você poderá utilziar a API.
+
+No canto direito você pode consultar a documentação e os schemas da API ;)
 
 Exemplos de requisições possíveis:
 
