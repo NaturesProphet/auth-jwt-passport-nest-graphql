@@ -6,6 +6,8 @@ import { repositoryConfig } from '../../common/configs/repository.config';
 import { GenericUser } from '../../db/models/super/genericUser.model';
 import { AuthenticatedUser } from './DTOs/authenticatedUser.class';
 import { Admin } from '../../db/models/admin.model';
+import { Permission } from 'src/db/models/permission.model';
+import { Role } from 'src/db/models/role.model';
 
 
 @Injectable()
@@ -70,9 +72,29 @@ export class AuthService {
       role: user.role,
       accountType: user.accountType
     };
+    this.filter( payload );
     return {
       access_token: `bearer ${this.jwtService.sign( payload )}`,
       user: payload
     };
+  }
+
+  // remove lixo do payload para gerar um token menor
+  private filter ( user: AuthenticatedUser ) {
+    if ( user.role ) {
+      let r = new Role();
+      r.id = user.role.id;
+      r.name = user.role.name;
+      r.permissions = user.role.permissions ? user.role.permissions : null;
+      user.role = r;
+      if ( user.role.permissions ) {
+        for ( let i = 0; i < user.role.permissions.length; i++ ) {
+          let p = new Permission();
+          p.feature = user.role.permissions[ i ].feature;
+          p.operation = user.role.permissions[ i ].operation;
+          user.role.permissions[ i ] = p;
+        }
+      }
+    }
   }
 }
