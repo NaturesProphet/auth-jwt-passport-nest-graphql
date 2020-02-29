@@ -6,8 +6,8 @@ import { repositoryConfig } from '../../common/configs/repository.config';
 import { GenericUser } from '../../db/models/super/genericUser.model';
 import { AuthenticatedUser } from './DTOs/authenticatedUser.class';
 import { Admin } from '../../db/models/admin.model';
-import { Permission } from 'src/db/models/permission.model';
-import { Role } from 'src/db/models/role.model';
+import { Permission } from '../../db/models/permission.model';
+import { Role } from '../../db/models/role.model';
 
 
 @Injectable()
