@@ -44,6 +44,7 @@ yarn start
 
 ### Popular o banco com os primeiros dados críticos
 Após ter iniciado a api uma vez, basta rodar um "migration" para popular as tabelas. Para isso, eu utilizei os migrations nativos do typeorm, adaptando para fazer seed em vez de migration.
+O arquivo ormconfig.json será lido por esse comando a seguir, para configuração do banco que o comando deverá executar. Observe que a API não utiliza esse arquivo, apenas a migration.
 Execute esse comando:
 
 ```
@@ -96,7 +97,7 @@ http://localhost:3000/graphql
 no canto esquerdo inferior, vá nos headers e adicione o token
 ```JSON
 {
-  "Authorization":"<Seu Token avai aqui>"
+  "Authorization":"<Seu Token vai aqui>"
 }
 ```
 
