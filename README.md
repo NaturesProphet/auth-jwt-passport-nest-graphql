@@ -1,75 +1,194 @@
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
 </p>
-
-[travis-image]: https://api.travis-ci.org/nestjs/nest.svg?branch=master
-[travis-url]: https://travis-ci.org/nestjs/nest
-[linux-image]: https://img.shields.io/travis/nestjs/nest/master.svg?label=linux
-[linux-url]: https://travis-ci.org/nestjs/nest
-  
-  <p align="center">A progressive <a href="http://nodejs.org" target="blank">Node.js</a> framework for building efficient and scalable server-side applications, heavily inspired by <a href="https://angular.io" target="blank">Angular</a>.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/dm/@nestjs/core.svg" alt="NPM Downloads" /></a>
-<a href="https://travis-ci.org/nestjs/nest"><img src="https://api.travis-ci.org/nestjs/nest.svg?branch=master" alt="Travis" /></a>
-<a href="https://travis-ci.org/nestjs/nest"><img src="https://img.shields.io/travis/nestjs/nest/master.svg?label=linux" alt="Linux" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#5" alt="Coverage" /></a>
-<a href="https://gitter.im/nestjs/nestjs?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=body_badge"><img src="https://badges.gitter.im/nestjs/nestjs.svg" alt="Gitter" /></a>
-<a href="https://opencollective.com/nest#backer"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec"><img src="https://img.shields.io/badge/Donate-PayPal-dc3d53.svg"/></a>
-  <a href="https://twitter.com/nestframework"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
+<p align="center">
+   Uma aplicação desenvolvida em <a href="https://github.com/Microsoft/TypeScript">Typescript</a> usando <a href="http://nestjs.com/">Nestjs Framework</a>
 </p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-## Description
+# GraphQL com Nestjs utilizando autenticação JWT com Passport adaptado para o contexto GQL
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Sistema base pré-ajustado para começar projetos em GraphQL utilizando o NestJs. Basta clonar o repositório e começar novos projetos com o código base já pronto!
 
-## Installation
+## Permissões e grupos
+Contas de administrador possuem uma role, que é formada por uma agregação de várias permissões, que definem quais recursos a conta poderá acessar dentro do sistema
 
-```bash
-$ npm install
+## Configuração do ambiente
+Crie um arquivo .env baseado no .env.example disponível na raíz do projeto.
+
+## Iniciando a API em ambiente de desenvolvimento
+
+### Instalação das dependencias
+Instale as dependencias do projeto com seu package manager preferido (npm ou yarn). Utilizei yarn no exemplo.
+
+```
+yarn
 ```
 
-## Running the app
+### Banco de dados
+Para a primeira inicialização, você precisará subir o banco de dados (postgre), gerar as tabelas e popular as tabelas de permissões, roles e administradores.
 
-```bash
-# development
-$ npm run start
+Para fazer isso, siga esta sequência:
 
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+### Subindo um banco em docker
+Você pode usar o script do package.json pronto para a tarefa usando o Docker:
+```
+yarn postgre:test
 ```
 
-## Test
+### Gerar as tabelas
+A api usa o TypeORM com opção de SYNC. Ou seja, ajuste o SYNC (arquivo .env) para true e inicie a API. Isto irá gerar automaticamente as tabelas.
 
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+```
+yarn start
 ```
 
-## Support
+### Popular o banco com os primeiros dados críticos
+Após ter iniciado a api uma vez, basta rodar um "migration" para popular as tabelas. Para isso, eu utilizei os migrations nativos do typeorm, adaptando para fazer seed em vez de migration.
+Execute esse comando:
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+```
+yarn migrations
+```
 
-## Stay in touch
+Pronto! o sistema está pronto para uso!
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+### Autenticação
+A rota de login é REST. Mantive essa rota em REST devido a uma série de restrições do modulo Passport, que vem pré-configurado para funcionar apenas no REST.
 
-## License
+Utilizando um postman ou um insomnia, envie um POST para a rota
 
-  Nest is [MIT licensed](LICENSE).
+```
+http://localhost:3000/auth/admin
+```
+
+Utilize uma das duas contas de administrador padrão no body:
+
+```JSON
+{
+  "username":"adminmaster@server.com",
+  "password":"123456"
+}
+```
+
+ou 
+
+```JSON
+{
+  "username":"auditoria@server.com",
+  "password":"123456"
+}
+```
+
+Copie o token fornecido na resposta.
+
+
+## Playground GraphQL
+
+Com o token gerado, agora já podemos utilziar todos os recursos da API.
+
+Acesse a rota
+
+```
+http://localhost:3000/graphql
+```
+
+
+no canto esquerdo inferior, vá nos headers e adicione o token
+```JSON
+{
+  "Authorization":"<Seu Token avai aqui>"
+}
+```
+
+Pronto! agora você poderá utilziar a API.
+
+Exemplos de requisições possíveis:
+
+```
+query permissions {
+  listPermissions(query: { limit: 1000 }) {
+    id
+    operation
+    feature
+  }
+}
+
+query roles {
+  listRoles(query: { limit: 10000 }) {
+    id
+    name
+    permissions {
+      id
+    }
+  }
+}
+
+query logs {
+  listLogs(query: { limit: 1000 }) {
+    id
+  }
+}
+
+query admns {
+  listAdmins(query: { limit: 10000 }) {
+    id
+    name
+    email
+    role {
+      name
+    }
+  }
+}
+
+mutation createPermission {
+  createPermission(data: { operation: "delete", feature: "log" }) {
+    id
+  }
+}
+
+mutation createRole {
+  createRole(
+    data: { name: "asd", description: "asd", permissions: [1, 2, 3] }
+  ) {
+    id
+  }
+}
+
+mutation createAdmin {
+  createAdmin(
+    data: {
+      name: "asd"
+      birthDay: "2020-01-01"
+      email: "asd@asd.asd"
+      cpf: "1234123123"
+      phone: "27988884444"
+      password: "123456"
+    }
+  ) {
+    id
+  }
+}
+
+mutation editAdmin {
+  editAdmin(data: { id: 2, birthDay: "2020-10-10" }) {
+    id
+  }
+}
+
+mutation editPermissionAdd {
+  editRoleAddingPermissions(dto: { role: 2, permissions: [3, 4] }) {
+    id
+  }
+}
+
+mutation editPermissionRemove {
+  editRoleRemovingPermissions(dto: { role: 2, permissions: [3, 4] }) {
+    id
+  }
+}
+
+```
+
+
+## Debug
+Após iniciar o Debug (F5), aguarde a mensagem "API pronta e ouvindo na porta 3000" no terminal do debugger antes de iniciar a sua depuração.
