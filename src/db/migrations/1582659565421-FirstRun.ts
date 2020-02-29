@@ -145,6 +145,24 @@ export class CreatePermissions1582659565421 implements MigrationInterface {
         ad1.role = r1;
         ad1.profilePicturePath = 'https://avatars2.githubusercontent.com/u/32722732?s=460&v=4'
         await connection.getRepository( Admin ).save( ad1 );
+        ///////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////
+        let ad2 = new Admin();
+        ad2.id = 2;
+        ad2.birthDay = new Date();
+        ad2.cpf = '22345678922';
+        ad2.email = 'auditoria@server.com'
+        ad2.name = "O Olho que tudo vê"
+        ad2.phone = "+5527999999988"
+        ad2.status = 'active';
+        ad2.setPassword( '123456' );
+        ad2.role = r2;
+        ad2.profilePicturePath = 'https://avatars2.githubusercontent.com/u/32722732?s=460&v=4'
+        await connection.getRepository( Admin ).save( ad2 );
+        ///////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////
         console.log( '\n\n\n' )
 
         Logger.log( 'Estrutura inicial gerada com sucesso. ' +

@@ -21,7 +21,7 @@ export class RoleResolver {
     description: 'listar as roles administrativas'
   } )
   public async listRoles ( @GqlUser() user, @Args( 'query' ) query: RoleQueryInput ): Promise<Role[]> {
-    adminOnly( user );
+    adminOnly( user, 'list', 'role' );
     return this.service.listRoles( query );
   }
 
@@ -32,7 +32,7 @@ export class RoleResolver {
   } )
   public async createRole ( @Args( 'data' ) input: RoleInput, @GqlUser() user ):
     Promise<Role> {
-    adminOnly( user );
+    adminOnly( user, 'create', 'role' );
     return this.service.createRole( input );
   }
 
@@ -44,7 +44,7 @@ export class RoleResolver {
   } )
   public async editRoleAddingPermissions ( @Args( 'dto' ) dto: RoleEditInput, @GqlUser() user ):
     Promise<Role> {
-    adminOnly( user );
+    adminOnly( user, 'edit', 'role' );
     return this.service.addPermissionsToRole( dto );
   }
 
@@ -56,7 +56,7 @@ export class RoleResolver {
   } )
   public async editRoleRemovingPermissions ( @Args( 'dto' ) dto: RoleEditInput, @GqlUser() user ):
     Promise<Role> {
-    adminOnly( user );
+    adminOnly( user, 'edit', 'role' );
     return this.service.removePermissionsToRole( dto );
   }
 

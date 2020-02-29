@@ -71,7 +71,7 @@ export class AuthService {
       accountType: user.accountType
     };
     return {
-      access_token: this.jwtService.sign( payload ),
+      access_token: `bearer ${this.jwtService.sign( payload )}`,
       user: payload
     };
   }

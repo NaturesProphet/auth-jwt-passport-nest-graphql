@@ -3,6 +3,7 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
+"""Administrador do sistema"""
 type Admin {
   """ID da entidade"""
   id: Float!
@@ -121,6 +122,7 @@ The javascript `Date` as string. Type represents date and time as the ISO Date s
 """
 scalar DateTime
 
+"""Entidade genérica abastrata. todas as classes erdam dela."""
 type GenericEntity {
   """ID da entidade"""
   id: Float!
@@ -143,6 +145,7 @@ input GenericQuery {
   limit: Float
 }
 
+"""Usuário genérico abstrato. Todos os usuários erdam dele."""
 type GenericUser {
   """ID da entidade"""
   id: Float!
@@ -264,6 +267,9 @@ type Mutation {
   editRoleRemovingPermissions(dto: RoleEditInput!): Role!
 }
 
+"""
+Permissão básica. O conjunto dessas permissões compõe as roles administrativas
+"""
 type Permission {
   """ID da entidade"""
   id: Float!
@@ -320,6 +326,9 @@ type Query {
   listLogs(query: listLogsQuery!): [Log!]!
 }
 
+"""
+Role administrativa. Define o papel de cada administrador no sistema, limitando seu nível de acesso.
+"""
 type Role {
   """ID da entidade"""
   id: Float!

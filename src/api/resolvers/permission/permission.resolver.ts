@@ -22,7 +22,7 @@ export class PermissionResolver {
   } )
   @UseGuards( GqlAuthGuard )
   public async listPermissions ( @GqlUser() user, @Args( 'query' ) query: PermissionQueryInput ): Promise<Permission[]> {
-    adminOnly( user );
+    adminOnly( user, 'list', 'permission' );
     return this.service.listPermissions( query );
   }
 
@@ -33,7 +33,7 @@ export class PermissionResolver {
   } )
   public async createPermission ( @GqlUser() user, @Args( 'data' ) input: PermissionInput ):
     Promise<Permission> {
-    adminOnly( user );
+    adminOnly( user, 'create', 'permission' );
     return this.service.createPermission( input );
   }
 

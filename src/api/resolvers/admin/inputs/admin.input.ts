@@ -1,5 +1,5 @@
 import { Field, InputType } from 'type-graphql';
-import { IsString, IsEmail, IsPhoneNumber } from 'class-validator';
+import { IsString, IsEmail, IsPhoneNumber, IsDateString, IsDate } from 'class-validator';
 
 @InputType()
 export class AdminInput {
@@ -12,7 +12,7 @@ export class AdminInput {
   @Field( {
     description: "aniversário administrador"
   } )
-  @IsString()
+  @IsDate()
   birthDay: Date;
 
   @Field( {

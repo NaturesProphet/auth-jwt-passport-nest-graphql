@@ -1,5 +1,6 @@
 import { ConflictException, ForbiddenException } from "@nestjs/common";
 import { Permission } from "../db/models/permission.model";
+import { AuthenticatedUser } from "src/api/auth/DTOs/authenticatedUser.class";
 
 /**
  * Verify if an TypeORM erromsg means the entity already exists
@@ -44,9 +45,9 @@ export function getLastDaysInterval ( d: Date, daysInterval?: number ): string[]
 }
 
 
-export function permissionFilter ( req: any, operation: string, feature: string ) {
-  if ( req && req.user && req.user.role && req.user.role.permissions.length > 0 ) {
-    let permissions: Permission[] = req.user.role.permissions;
+export function permissionFilter ( user: AuthenticatedUser, operation: string, feature: string ) {
+  if ( user && user.role && user.role.permissions.length > 0 ) {
+    let permissions: Permission[] = user.role.permissions;
     let valid = false;
     for ( let i = 0; i < permissions.length; i++ ) {
       if ( permissions[ i ].feature == feature && permissions[ i ].operation == operation ) {

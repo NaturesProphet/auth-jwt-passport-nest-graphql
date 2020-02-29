@@ -1,5 +1,5 @@
 import { Field, InputType } from 'type-graphql';
-import { IsNumber, IsOptional, IsString, IsEmail, IsPhoneNumber, IsEnum } from 'class-validator';
+import { IsNumber, IsOptional, IsString, IsEmail, IsPhoneNumber, IsEnum, IsDate } from 'class-validator';
 import { enumUserStatus } from '../../../../common/enums/userStatus.enum';
 
 @InputType()
@@ -25,7 +25,7 @@ export class AdminEditInput {
     description: "aniversário administrador"
   } )
   @IsOptional()
-  @IsString()
+  @IsDate()
   birthDay: Date;
 
   @Field( {
