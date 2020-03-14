@@ -15,35 +15,42 @@ export class Log extends GenericEntity {
 
   @Column( { nullable: true } )
   @Field( {
-    description: 'conteúdo do corpo da requisição'
+    description: 'conteúdo do corpo da requisição',
+    nullable: true
   } )
   body: string;
 
   @Column( { nullable: true } )
-  @Field()
+  @Field( {
+    nullable: true
+  } )
   variables: string;
 
   @Column( { nullable: true } )
   @Field( {
-    description: 'ID do usuário que gerou o log'
+    description: 'ID do usuário que gerou o log',
+    nullable: true
   } )
   userId: number;
 
   @Column( { nullable: true } )
   @Field( {
-    description: 'Tipo de conta do usuário que gerou o log'
+    description: 'Tipo de conta do usuário que gerou o log',
+    nullable: true
   } )
   accountType: string;
 
   @Column( { nullable: true } )
   @Field( {
-    description: 'IP da requisição que gerou o log'
+    description: 'IP da requisição que gerou o log',
+    nullable: true
   } )
   ip: string;
 
   @Column( { nullable: true } )
   @Field( {
-    description: 'Dispositivo ou sistema que enviou a requisição'
+    description: 'Dispositivo ou sistema que enviou a requisição',
+    nullable: true
   } )
   userAgent: string;
 }

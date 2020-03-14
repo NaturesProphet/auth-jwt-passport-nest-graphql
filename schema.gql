@@ -9,10 +9,10 @@ type Admin {
   id: Float!
 
   """data de criação do registro"""
-  createdAt: DateTime!
+  createdAt: String!
 
   """data da ultima atualização do registro"""
-  updatedAt: DateTime!
+  updatedAt: String!
 
   """Nome do usuário"""
   name: String!
@@ -128,10 +128,10 @@ type GenericEntity {
   id: Float!
 
   """data de criação do registro"""
-  createdAt: DateTime!
+  createdAt: String!
 
   """data da ultima atualização do registro"""
-  updatedAt: DateTime!
+  updatedAt: String!
 }
 
 input GenericQuery {
@@ -151,10 +151,10 @@ type GenericUser {
   id: Float!
 
   """data de criação do registro"""
-  createdAt: DateTime!
+  createdAt: String!
 
   """data da ultima atualização do registro"""
-  updatedAt: DateTime!
+  updatedAt: String!
 
   """Nome do usuário"""
   name: String!
@@ -222,29 +222,29 @@ type Log {
   id: Float!
 
   """data de criação do registro"""
-  createdAt: DateTime!
+  createdAt: String!
 
   """data da ultima atualização do registro"""
-  updatedAt: DateTime!
+  updatedAt: String!
 
   """rota da API que originou o log"""
   endpoint: String!
 
   """conteúdo do corpo da requisição"""
-  body: String!
-  variables: String!
+  body: String
+  variables: String
 
   """ID do usuário que gerou o log"""
-  userId: Float!
+  userId: Float
 
   """Tipo de conta do usuário que gerou o log"""
-  accountType: String!
+  accountType: String
 
   """IP da requisição que gerou o log"""
-  ip: String!
+  ip: String
 
   """Dispositivo ou sistema que enviou a requisição"""
-  userAgent: String!
+  userAgent: String
 }
 
 type Mutation {
@@ -275,10 +275,10 @@ type Permission {
   id: Float!
 
   """data de criação do registro"""
-  createdAt: DateTime!
+  createdAt: String!
 
   """data da ultima atualização do registro"""
-  updatedAt: DateTime!
+  updatedAt: String!
 
   """operação. exemplos: edit, list, delete, create"""
   operation: String!
@@ -334,10 +334,10 @@ type Role {
   id: Float!
 
   """data de criação do registro"""
-  createdAt: DateTime!
+  createdAt: String!
 
   """data da ultima atualização do registro"""
-  updatedAt: DateTime!
+  updatedAt: String!
 
   """Nome da role"""
   name: String!
