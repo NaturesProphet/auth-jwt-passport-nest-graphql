@@ -29,7 +29,7 @@
     "@nestjs/graphql": "^6.6.1",
     "@nestjs/jwt": "^6.1.2",
     "@nestjs/passport": "^6.2.0",
-    "@nestjs/platform-express": "^6.10.14",
+    "@nestjs/platform-express": "^9.2.1",
     "@nestjs/typeorm": "^6.3.3",
     "@types/bcryptjs": "^2.4.2",
     "@types/graphql": "^14.5.0",
